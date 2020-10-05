@@ -1,0 +1,31 @@
+// Problem Link: https://leetcode.com/explore/challenge/card/october-leetcoding-challenge/559/week-1-october-1st-october-7th/3483/
+
+// Solution
+bool compare(vector<int>&A, vector<int>&B){
+    if(A[0] == B[0]){
+        return A[1]>B[1];
+    }
+
+    return A[0]<B[0];
+}
+
+class Solution {
+public:
+    int removeCoveredIntervals(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end(), compare);
+        
+        int count=1, start =intervals[0][0], end = intervals[0][1];
+        
+        for(int i=1;i<intervals.size();i++){
+            if(start <= intervals[i][0] && end >=intervals[i][1]){
+                continue;
+            }else{
+                start = min(start, intervals[i][0]);
+                end = max(end, intervals[i][1]);
+                count++;
+            }
+        }
+        
+        return count;
+    }
+};
